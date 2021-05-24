@@ -1,0 +1,144 @@
+{% extends "layout.html" %}
+{% block body %}
+<div id="project-register">
+    <form action="{{url_for('display_projects')}}" method="POST">
+        {% with messages = get_flashed_messages()  %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <style scoped>
+            @import "{{url_for('static', filename='css/register.css')}}";
+        </style>
+        <label>
+          <p class="label-txt">Nombre del proyecto</p>
+          <input type="text" name="proyecto" class="input">
+          <div class="line-box">
+            <div class="line"></div>
+          </div>
+        </label>
+        <label>
+          <p class="label-txt">Rut del contratista</p>
+          <input type="text" name="rut" class="input">
+          <div class="line-box">
+            <div class="line"></div>
+          </div>
+        </label>
+        <label>
+          <p class="label-txt">Nombre del contratista</p>
+          <input type="text"  name="nombre" class="input">
+          <div class="line-box">
+            <div class="line"></div>
+          </div>
+        </label>
+        <button type="submit">submit</button>
+    </form>    
+
+
+
+
+
+    <table class="table bg-white acc" id="account-table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Projecto</th>
+            <th scope="col">Rut Contratista</th>
+            <th scope="col">Nombre Contratista</th>
+            <th scope="col">Agregar Grupo</th>
+            <th scope="col">Ver Grupos</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          {% for project in projects %}
+          <tr>
+            <th scope="row">{{project.0}}</td>
+            <td>{{project.1}}</td>
+            <td>{{project.2}}</td>
+            <td>{{project.3}}</td>
+            <td>
+                <a href="#" class="btn btn-secondary">+</a>
+            </td>
+            <td>
+                <a href="#" class="btn btn-secondary" data-toggle="collapse" data-target="#demo{{project.0}}" data-parent="#account-table">Ver</a>
+            </td>
+            <div class="collapse demo out" id="demo{{project.0}}">
+                <div class="card card-body">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                </div>
+            </div>
+          </tr>
+          
+          {% endfor %}
+        </tbody>
+    </table>
+      
+    <button class="btn">Hola</button>
+    <div id="otro-boton">
+
+    </div>
+
+
+</div>
+
+<script>
+    $(document).ready(function(){
+
+    $('.input').focus(function(){
+    $(this).parent().find(".label-txt").addClass('label-active');
+    });
+
+    $(".input").focusout(function(){
+    if ($(this).val() == '') {
+        $(this).parent().find(".label-txt").removeClass('label-active');
+    };
+    });
+
+    $(".btn").click(function(){
+        //alert("Hicist un click!")
+        $("#barra-carga").hide()
+        var element = document.createElement('button');
+        element.innerText = "Hola que tal!";
+        var boton_vacio = document.getElementById("otro-boton")
+
+        boton_vacio.append(element)
+
+        $.ajax(
+        {
+            type: "POST",
+            url: "www.google.cl",
+            data: {saludo:"Hola"},
+            dataType:'json',
+            success: function( result ){
+                
+                for (var i in result){
+                    var boton_vacio = document.getElementById("otro-boton")
+                }
+            },
+            error: function(data){
+                console.log("Ocurrio un error")
+                alert("Ocurrio un error")
+            }
+            
+        });
+    })
+
+
+
+    
+
+
+    });
+</script>
+
+  
+
+{% endblock %}
